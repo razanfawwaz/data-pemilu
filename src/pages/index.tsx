@@ -233,7 +233,7 @@ export default function Home() {
                           value: item.value,
                           color: item.color
                         }))}
-                        label={({ dataEntry }) => `${Math.round((dataEntry.value / total) * 100)}%`}
+                        label={({ dataEntry }) => `${((dataEntry.value / total) * 100).toFixed(2)}%`}
                         labelStyle={{
                           fontSize: '0.25rem',
                           fontFamily: 'sans-serif',
