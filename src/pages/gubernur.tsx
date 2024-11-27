@@ -208,7 +208,7 @@ export default function Home() {
   return (
     <main className={`${geistSans.variable} ${geistMono.variable} min-h-screen p-4 sm:p-8 font-[family-name:var(--font-geist-sans)]`}>
       <div className="container mx-auto max-w-6xl space-y-6">
-        <h1 className="text-2xl font-bold mb-6">Hasil Pilkada 2024 - Pemilihan Gubernur/Wali Kota</h1>
+        <h1 className="text-2xl font-bold mb-6">Hasil Pilkada 2024 - Pemilihan Gubernur/Wakil Gubernur</h1>
         <p className="text-sm text-gray-600 dark:text-gray-400">The data that is displayed here is from the <a href="https://pilkada2024.kpu.go.id" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400">https://pilkada2024.kpu.go.id API</a>. For more accurate data, please visit the official website of <a href="https://pilkada2024.kpu.go.id" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400">KPU</a>.</p>
 
         <Link href="/kepala-daerah" className="text-blue-600 dark:text-blue-400 py-2 px-4 mt-4 inline-block bg-blue-100 rounded-md">View Data Kepala Daerah</Link>
