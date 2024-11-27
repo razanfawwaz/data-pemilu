@@ -146,6 +146,9 @@ export default function Home() {
       <div className="container mx-auto max-w-6xl space-y-6">
         <h1 className="text-2xl font-bold mb-6">Hasil Pilkada 2024 - Pemilihan Bupati/Walikota</h1>
         <p className="text-sm text-gray-600 dark:text-gray-400">The data that is displayed here is from the <a href="https://pilkada2024.kpu.go.id" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400">https://pilkada2024.kpu.go.id API</a>. For more accurate data, please visit the official website of <a href="https://pilkada2024.kpu.go.id" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400">KPU</a>.</p>
+
+        <a href="/gubernur" className="text-blue-600 dark:text-blue-400 py-2 px-4 mt-4 inline-block bg-blue-100 rounded-md">View Data Gubernur</a>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Dropdowns */}
           <div className="space-y-4">
