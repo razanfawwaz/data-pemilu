@@ -145,7 +145,7 @@ export default function Home() {
     <main className={`${geistSans.variable} ${geistMono.variable} min-h-screen p-4 sm:p-8 font-[family-name:var(--font-geist-sans)]`}>
       <div className="container mx-auto max-w-6xl space-y-6">
         <h1 className="text-2xl font-bold mb-6">Hasil Pilkada 2024 - Pemilihan Bupati/Walikota</h1>
-        
+        <p className="text-sm text-gray-600 dark:text-gray-400">The data that is displayed here is from the <a href="https://pilkada2024.kpu.go.id" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400">https://pilkada2024.kpu.go.id API</a>. For more accurate data, please visit the official website of <a href="https://pilkada2024.kpu.go.id" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400">KPU</a>.</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Dropdowns */}
           <div className="space-y-4">
@@ -168,7 +168,7 @@ export default function Home() {
               onChange={(e) => setSelectedDistrict(e.target.value)}
               className="w-full p-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm"
             >
-              <option value="">All Kabupaten/Kota</option>
+            <option value="">All Kabupaten/Kota</option>
               {districts.map((district) => (
                 <option key={district.id} value={district.kode}>
                   {district.nama}
