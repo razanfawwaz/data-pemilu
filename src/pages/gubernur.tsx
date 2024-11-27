@@ -72,16 +72,6 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-// Update the fetch headers in all API calls with these headers
-const fetchHeaders = {
-  'accept': 'application/json, text/plain, */*',
-  'accept-language': 'en-US,en;q=0.9',
-  'sec-fetch-dest': 'empty',
-  'sec-fetch-mode': 'cors',
-  'sec-fetch-site': 'cross-site',
-  'Referer': 'https://pilkada2024.kpu.go.id/',
-  'Origin': 'https://pilkada2024.kpu.go.id'
-};
 
 export default function Home() {
   const [selectedProvince, setSelectedProvince] = useState("");
@@ -97,16 +87,8 @@ export default function Home() {
     const fetchOverallData = async () => {
       try {
         const [dataRes, candidateRes] = await Promise.all([
-          fetch('https://sirekappilkada-obj-data.kpu.go.id/pilkada/hhcw/pkwkp.json', {
-            headers: fetchHeaders,
-            mode: 'cors',
-            credentials: 'omit'
-          }),
-          fetch('https://sirekappilkada-obj-data.kpu.go.id/pilkada/paslon/pkwkp.json', {
-            headers: fetchHeaders,
-            mode: 'cors',
-            credentials: 'omit'
-          })
+          fetch('https://sirekappilkada-obj-data.kpu.go.id/pilkada/hhcw/pkwkp.json'),
+          fetch('https://sirekappilkada-obj-data.kpu.go.id/pilkada/paslon/pkwkp.json')
         ]);
         
         const [data, candidates] = await Promise.all([
@@ -133,19 +115,7 @@ export default function Home() {
       }
       
       try {
-        const response = await fetch(`https://sirekappilkada-obj-data.kpu.go.id/wilayah/pilkada/pkwkp/${selectedProvince}.json`, {
-            headers: {
-                'accept': 'application/json, text/plain, */*',
-                'accept-language': 'en-US,en;q=0.9,id;q=0.8,am;q=0.7',
-                'dnt': '1',
-                'origin': 'https://pilkada2024.kpu.go.id',
-                'referer': 'https://pilkada2024.kpu.go.id/',
-                'sec-fetch-dest': 'empty',
-                'sec-fetch-mode': 'cors', 
-                'sec-fetch-site': 'same-site',
-                'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1'
-              }
-        });
+        const response = await fetch(`https://sirekappilkada-obj-data.kpu.go.id/wilayah/pilkada/pkwkp/${selectedProvince}.json`);
         const districtData = await response.json();
         setDistricts(districtData);
       } catch (error) {
@@ -167,32 +137,8 @@ export default function Home() {
         console.log('Province Code:', selectedProvince.substring(0, 2));
 
         const [electionRes, candidateRes] = await Promise.all([
-          fetch(`https://sirekappilkada-obj-data.kpu.go.id/pilkada/hhcw/pkwkp/${selectedProvince}.json`, {
-            headers: {
-                'accept': 'application/json, text/plain, */*',
-                'accept-language': 'en-US,en;q=0.9,id;q=0.8,am;q=0.7',
-                'dnt': '1',
-                'origin': 'https://pilkada2024.kpu.go.id',
-                'referer': 'https://pilkada2024.kpu.go.id/',
-                'sec-fetch-dest': 'empty',
-                'sec-fetch-mode': 'cors', 
-                'sec-fetch-site': 'same-site',
-                'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1'
-              }
-          }),
-          fetch(`https://sirekappilkada-obj-data.kpu.go.id/pilkada/paslon/pkwkp/${selectedProvince}.json`, {
-            headers: {
-                'accept': 'application/json, text/plain, */*',
-                'accept-language': 'en-US,en;q=0.9,id;q=0.8,am;q=0.7',
-                'dnt': '1',
-                'origin': 'https://pilkada2024.kpu.go.id',
-                'referer': 'https://pilkada2024.kpu.go.id/',
-                'sec-fetch-dest': 'empty',
-                'sec-fetch-mode': 'cors', 
-                'sec-fetch-site': 'same-site',
-                'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1'
-              }
-          })
+          fetch(`https://sirekappilkada-obj-data.kpu.go.id/pilkada/hhcw/pkwkp/${selectedProvince}.json`),
+          fetch(`https://sirekappilkada-obj-data.kpu.go.id/pilkada/paslon/pkwkp/${selectedProvince}.json`)
         ]);
         
         const [electionData, candidateData] = await Promise.all([
