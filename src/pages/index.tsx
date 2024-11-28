@@ -42,7 +42,7 @@ interface ElectionData {
           persen: number;
           progres: number;
         };
-        status_progress: boolean;
+        status_Progres: boolean;
         [key: string]: string | number | {
           total: number;
           persen: number;
@@ -147,10 +147,23 @@ export default function Home() {
   return (
     <main className={`${geistSans.variable} ${geistMono.variable} min-h-screen p-4 sm:p-8 font-[family-name:var(--font-geist-sans)]`}>
       <div className="container mx-auto max-w-6xl space-y-6">
-        <h1 className="text-2xl font-bold mb-6">Hasil Pilkada 2024 - Pemilihan Bupati/Walikota</h1>
-        <p className="text-sm text-gray-600 dark:text-gray-400">Data yang ditampilkan hasil scrapping dari <a href="https://pilkada2024.kpu.go.id" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400">https://pilkada2024.kpu.go.id/</a> kode program dan data scrapping dapat dilihat di <a href="https://github.com/razanfawwaz/pilkada-scrap" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400">https://github.com/razanfawwaz/pilkada-scrap.</a> Situs ini bertujuan untuk memudahkan melihat grafis, untuk data yang lebih akurat silahkan melihat di <a href="https://pilkada2024.kpu.go.id" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400">https://pilkada2024.kpu.go.id/</a></p>
+      <h1 className="text-2xl font-bold mb-6">Visualisasi Rekapitulasi Hasil <i>Scraping</i> Pilkada 2024 - Pemilihan Bupati/Walikota</h1>
+        <div className="bg-red-50 border-l-4 border-red-400 p-4 dark:bg-red-900/30 dark:border-red-600">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-red-400 dark:text-red-600" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm text-red-700 dark:text-red-200">
+                Data yang disajikan merupakan hasil pengambilan <i>scraping</i> dari laman <a href="https://pilkada2024.kpu.go.id" target="_blank" rel="noopener noreferrer" className="text-red-800 dark:text-red-300 underline">https://pilkada2024.kpu.go.id/</a>, dengan kode program dan data scraping dapat diakses di <a href="https://github.com/razanfawwaz/pilkada-scrap" target="_blank" rel="noopener noreferrer" className="text-red-800 dark:text-red-300 underline">https://github.com/razanfawwaz/pilkada-scrap</a>. Situs ini bertujuan memberikan visualisasi grafis dan <span className="font-bold">bukan merupakan publikasi resmi Komisi Pemilihan Umum Republik Indonesia</span>. Untuk informasi yang lebih akurat, disarankan untuk mengunjungi situs resmi <a href="https://pilkada2024.kpu.go.id" target="_blank" rel="noopener noreferrer" className="text-red-800 dark:text-red-300 underline">https://pilkada2024.kpu.go.id/</a>
+              </p>
+            </div>
+          </div>
+        </div>
 
-        <Link href="/gubernur" className="text-blue-600 dark:text-blue-400 py-2 px-4 mt-4 inline-block bg-blue-100 rounded-md">Lihat Data Gubernur</Link>
+        <Link href="/gubernur" className="text-blue-600 dark:text-blue-  py-2 px-4 mt-4 inline-block bg-blue-100 rounded-md">Lihat Data Gubernur</Link>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Dropdowns */}
@@ -160,7 +173,7 @@ export default function Home() {
               onChange={(e) => setSelectedProvince(e.target.value)}
               className="w-full p-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm"
             >
-              <option value="">Select Province</option>
+              <option value="">Pilih Provinsi</option>
               {provinces.map((province) => (
                 <option key={province.id} value={province.kode}>
                   {province.nama}
@@ -174,7 +187,7 @@ export default function Home() {
               onChange={(e) => setSelectedDistrict(e.target.value)}
               className="w-full p-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm"
             >
-            <option value="">All Kabupaten/Kota</option>
+            <option value="">Pilih Kabupaten/Kota</option>
               {districts.map((district) => (
                 <option key={district.id} value={district.kode}>
                   {district.nama}
@@ -186,7 +199,7 @@ export default function Home() {
           {/* Progress information */}
           {data && (
             <div className="bg-white dark:bg-gray-800 p-4 rounded-md border border-gray-300 dark:border-gray-700">
-              <div className="mb-2">Progress: {data.progres.progres} TPS / {data.progres.total} TPS - {((data.progres.progres / data.progres.total) * 100).toFixed(2)}%</div>
+              <div className="mb-2">Progres: {data.progres.progres} TPS / {data.progres.total} TPS - {((data.progres.progres / data.progres.total) * 100).toFixed(2)}%</div>
               
               <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
                 <div 
@@ -195,7 +208,7 @@ export default function Home() {
                 ></div>
               </div>
               <div className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                Last Updated: {new Date(data.ts).toLocaleString()}
+                Terakhir Diperbarui: {new Date(data.ts).toLocaleString()}
               </div>
             </div>
           )}
@@ -218,7 +231,7 @@ export default function Home() {
                     
                     <div className="mb-4">
                       <div className="text-sm mb-2">
-                        Progress: {districtProgress.progres} / {districtProgress.total} TPS ({districtProgress.persen.toFixed(2)}%)
+                        Progres: {districtProgress.progres} / {districtProgress.total} TPS ({districtProgress.persen.toFixed(2)}%)
                       </div>
                       <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
                         <div 
