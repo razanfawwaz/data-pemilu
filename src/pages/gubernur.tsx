@@ -95,9 +95,14 @@ export default function Home() {
           dataRes.json(),
           candidateRes.json()
         ]);
-        
-        setOverallData(data);
-        setOverallCandidates(candidates);
+
+        // Validate data matches expected format
+        if (data?.mode === 'hhcw' && data?.tungsura?.chart?.progres) {
+          setOverallData(data);
+          setOverallCandidates(candidates);
+        } else {
+          console.error('Invalid data format received');
+        }
       } catch (error) {
         console.error('Error fetching overall data:', error);
       }
@@ -365,12 +370,12 @@ export default function Home() {
                     
                     <div className="mb-4">
                       <div className="text-sm mb-2">
-                        Progress: {provinceProgress.progres} / {provinceProgress.total} TPS ({provinceProgress.persen.toFixed(2)}%)
+                        Progress: {provinceProgress.progres.toLocaleString()} / {provinceProgress.total.toLocaleString()} TPS ({((provinceProgress.progres / provinceProgress.total) * 100).toFixed(2)}%)
                       </div>
                       <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
                         <div 
                           className="bg-blue-600 h-2 rounded-full" 
-                          style={{ width: `${provinceProgress.persen}%` }}
+                          style={{ width: `${(provinceProgress.progres / provinceProgress.total * 100)}%` }}
                         />
                       </div>
                     </div>
