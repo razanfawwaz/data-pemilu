@@ -88,7 +88,7 @@ export default function Home() {
       }
       
       try {
-        const response = await fetch(`https://sirekappilkada-obj-data.kpu.go.id/wilayah/pilkada/pkwkp/${selectedProvince}.json`);
+        const response = await fetch(`https://raw.githubusercontent.com/razanfawwaz/pilkada-scrap/refs/heads/main/district/${selectedProvince}/${selectedProvince}.json`);
         const districtData = await response.json();
         setDistricts(districtData);
       } catch (error) {
@@ -107,14 +107,16 @@ export default function Home() {
       
       try {
         const [electionRes, candidateRes] = await Promise.all([
-          fetch(`https://sirekappilkada-obj-data.kpu.go.id/pilkada/hhcw/pkwkk/${selectedProvince}.json`),
-          fetch('https://sirekappilkada-obj-data.kpu.go.id/pilkada/paslon/pkwkk.json')
+          fetch(`https://raw.githubusercontent.com/razanfawwaz/pilkada-scrap/refs/heads/main/pkwkk/${selectedProvince}/${selectedProvince}.json`),
+          fetch('https://raw.githubusercontent.com/razanfawwaz/pilkada-scrap/refs/heads/main/paslon/pkwkk.json')
         ]);
         
         const [electionData, candidateData] = await Promise.all([
           electionRes.json(),
           candidateRes.json()
         ]);
+
+        console.log(electionData);
         
         setData(electionData);
         setCandidates(candidateData);
@@ -146,9 +148,9 @@ export default function Home() {
     <main className={`${geistSans.variable} ${geistMono.variable} min-h-screen p-4 sm:p-8 font-[family-name:var(--font-geist-sans)]`}>
       <div className="container mx-auto max-w-6xl space-y-6">
         <h1 className="text-2xl font-bold mb-6">Hasil Pilkada 2024 - Pemilihan Bupati/Walikota</h1>
-        <p className="text-sm text-gray-600 dark:text-gray-400">The data that is displayed here is from the <a href="https://pilkada2024.kpu.go.id" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400">https://pilkada2024.kpu.go.id API</a>. For more accurate data, please visit the official website of <a href="https://pilkada2024.kpu.go.id" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400">KPU</a>.</p>
+        <p className="text-sm text-gray-600 dark:text-gray-400">Data yang ditampilkan hasil scrapping dari <a href="https://pilkada2024.kpu.go.id" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400">https://pilkada2024.kpu.go.id/</a> kode program dan data scrapping dapat dilihat di <a href="https://github.com/razanfawwaz/pilkada-scrap" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400">https://github.com/razanfawwaz/pilkada-scrap.</a> Situs ini bertujuan untuk memudahkan melihat grafis, untuk data yang lebih akurat silahkan melihat di <a href="https://pilkada2024.kpu.go.id" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400">https://pilkada2024.kpu.go.id/</a></p>
 
-        <Link href="/gubernur" className="text-blue-600 dark:text-blue-400 py-2 px-4 mt-4 inline-block bg-blue-100 rounded-md">View Data Gubernur</Link>
+        <Link href="/gubernur" className="text-blue-600 dark:text-blue-400 py-2 px-4 mt-4 inline-block bg-blue-100 rounded-md">Lihat Data Gubernur</Link>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Dropdowns */}
