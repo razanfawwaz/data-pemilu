@@ -87,8 +87,8 @@ export default function Home() {
     const fetchOverallData = async () => {
       try {
         const [dataRes, candidateRes] = await Promise.all([
-          fetch('https://sirekappilkada-obj-data.kpu.go.id/pilkada/hhcw/pkwkp.json'),
-          fetch('https://sirekappilkada-obj-data.kpu.go.id/pilkada/paslon/pkwkp.json')
+          fetch('https://raw.githubusercontent.com/razanfawwaz/pilkada-scrap/refs/heads/main/pkwkp/0.json'),
+          fetch('https://raw.githubusercontent.com/razanfawwaz/pilkada-scrap/refs/heads/main/paslon/pkwkp.json')
         ]);
         
         const [data, candidates] = await Promise.all([
@@ -115,7 +115,7 @@ export default function Home() {
       }
       
       try {
-        const response = await fetch(`https://sirekappilkada-obj-data.kpu.go.id/wilayah/pilkada/pkwkp/${selectedProvince}.json`);
+        const response = await fetch(`https://raw.githubusercontent.com/razanfawwaz/pilkada-scrap/refs/heads/main/district/${selectedProvince}/${selectedProvince}.json`);
         const districtData = await response.json();
         setDistricts(districtData);
       } catch (error) {
@@ -133,12 +133,9 @@ export default function Home() {
       if (!selectedProvince) return;
       
       try {
-        console.log('Selected Province:', selectedProvince);
-        console.log('Province Code:', selectedProvince.substring(0, 2));
-
         const [electionRes, candidateRes] = await Promise.all([
-          fetch(`https://sirekappilkada-obj-data.kpu.go.id/pilkada/hhcw/pkwkp/${selectedProvince}.json`),
-          fetch(`https://sirekappilkada-obj-data.kpu.go.id/pilkada/paslon/pkwkp/${selectedProvince}.json`)
+          fetch(`https://raw.githubusercontent.com/razanfawwaz/pilkada-scrap/refs/heads/main/pkwkp/${selectedProvince}/${selectedProvince}.json`),
+          fetch('https://raw.githubusercontent.com/razanfawwaz/pilkada-scrap/refs/heads/main/paslon/pkwkp.json')
         ]);
         
         const [electionData, candidateData] = await Promise.all([
@@ -146,12 +143,8 @@ export default function Home() {
           candidateRes.json()
         ]);
         
-        console.log('Election Data:', electionData);
-        console.log('Full Candidate Data:', candidateData);
-        console.log('Province Candidates:', candidateData[selectedProvince.substring(0, 2)]);
-        
         setData(electionData);
-        setCandidates(candidateData[selectedProvince.substring(0, 2)] || {});
+        setCandidates(candidateData);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -166,10 +159,13 @@ export default function Home() {
     const districtData = data.tungsura.table[districtCode];
     if (!districtData) return [];
 
-    const chartData = Object.entries(districtData)
+    const provinceCode = selectedProvince.substring(0, 2);
+    const provinceCandidates = candidates[provinceCode];
+
+    return Object.entries(districtData)
       .filter(([key]) => key.startsWith('1000'))
       .map(([key, value]) => {
-        const candidateInfo = candidates[key];
+        const candidateInfo = provinceCandidates?.[key];
         return {
           id: key,
           value: typeof value === 'number' ? value : 0,
@@ -177,8 +173,6 @@ export default function Home() {
           color: candidateInfo?.warna || '#000000'
         };
       });
-
-    return chartData;
   };
 
   const getOverallChartData = (provinceCode: string) => {
@@ -187,10 +181,12 @@ export default function Home() {
     const provinceData = overallData.tungsura.table[provinceCode];
     if (!provinceData) return [];
 
+    const provinceCandidates = overallCandidates[provinceCode];
+
     return Object.entries(provinceData)
       .filter(([key]) => key.startsWith('1000'))
       .map(([key, value]) => {
-        const candidateInfo = overallCandidates[provinceCode]?.[key];
+        const candidateInfo = provinceCandidates?.[key];
         return {
           id: key,
           value: typeof value === 'number' ? value : 0,
@@ -210,9 +206,9 @@ export default function Home() {
     <main className={`${geistSans.variable} ${geistMono.variable} min-h-screen p-4 sm:p-8 font-[family-name:var(--font-geist-sans)]`}>
       <div className="container mx-auto max-w-6xl space-y-6">
         <h1 className="text-2xl font-bold mb-6">Hasil Pilkada 2024 - Pemilihan Gubernur/Wakil Gubernur</h1>
-        <p className="text-sm text-gray-600 dark:text-gray-400">The data that is displayed here is from the <a href="https://pilkada2024.kpu.go.id" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400">https://pilkada2024.kpu.go.id API</a>. For more accurate data, please visit the official website of <a href="https://pilkada2024.kpu.go.id" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400">KPU</a>.</p>
+        <p className="text-sm text-gray-600 dark:text-gray-400">Data yang ditampilkan hasil scrapping dari <a href="https://pilkada2024.kpu.go.id" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400">https://pilkada2024.kpu.go.id/</a> kode program dan data scrapping dapat dilihat di <a href="https://github.com/razanfawwaz/pilkada-scrap" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400">https://github.com/razanfawwaz/pilkada-scrap.</a> Situs ini bertujuan untuk memudahkan melihat grafis, untuk data yang lebih akurat silahkan melihat di <a href="https://pilkada2024.kpu.go.id" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400">https://pilkada2024.kpu.go.id/</a></p>
 
-        <Link href="/" className="text-blue-600 dark:text-blue-400 py-2 px-4 mt-4 inline-block bg-blue-100 rounded-md">View Data Kepala Daerah</Link>
+        <Link href="/" className="text-blue-600 dark:text-blue-400 py-2 px-4 mt-4 inline-block bg-blue-100 rounded-md">Lihat Data Bupati/Wali Kota</Link>
     
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Dropdowns */}
